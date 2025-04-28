@@ -36,10 +36,10 @@ def merge_train_valid_move(train_dir, valid_dir, output_dir):
 
 
 # Kullanım örneği
-train_dir = r"C:\Users\Bilal\MainDirectory\Ozel Calisma\plant_village_dataset\New Plant Diseases Dataset(Augmented)\New Plant Diseases Dataset(Augmented)\train"
-valid_dir = r"C:\Users\Bilal\MainDirectory\Ozel Calisma\plant_village_dataset\New Plant Diseases Dataset(Augmented)\New Plant Diseases Dataset(Augmented)\valid"
+train_dir = r"C:\Users\Bilal\Desktop\SonVeri\PlantVillageAugmentation\New Plant Diseases Dataset(Augmented)\New Plant Diseases Dataset(Augmented)\train"
+valid_dir = r"C:\Users\Bilal\Desktop\SonVeri\PlantVillageAugmentation\New Plant Diseases Dataset(Augmented)\New Plant Diseases Dataset(Augmented)\valid"
 output_dir = (
-    r"C:\Users\Bilal\MainDirectory\Ozel Calisma\plant_village_dataset\pv_dataset"
+    r"C:\Users\Bilal\Desktop\SonVeri\DuzenlenmisPG"
 )
 
 merge_train_valid_move(train_dir, valid_dir, output_dir)

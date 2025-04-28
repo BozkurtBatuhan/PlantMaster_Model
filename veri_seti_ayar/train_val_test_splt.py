@@ -82,8 +82,8 @@ def split_dataset(
 
 # Örnek Kullanım:
 split_dataset(
-    input_dir=r"C:\Users\Bilal\MainDirectory\Veriler\Veri Setleri\Veri Setleri",
-    output_dir=r"C:\Users\Bilal\MainDirectory\Ozel Calisma\100_dinov2\train_test_split\train_t_s",
+    input_dir=r"C:\Users\Bilal\Desktop\SonVeri\DuzenlenmisPG",
+    output_dir=r"C:\Users\Bilal\Desktop\SonVeri\DuzenlenmisPG-tts",
     train_ratio=0.8,
     val_ratio=0.1,
     test_ratio=0.1,
