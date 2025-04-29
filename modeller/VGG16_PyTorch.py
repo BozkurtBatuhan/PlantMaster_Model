@@ -11,7 +11,7 @@ import seaborn as sns
 import numpy as np
 from tqdm import tqdm
 
-dataset_root = r"C:\Users\Batuhan\Desktop\Resnet50modelegitim\veriler"
+dataset_root = r"C:\Users\Bilal\Desktop\SonVeri\DuzenlenmisPG-tts"
 train_path = os.path.join(dataset_root, 'train')
 val_path = os.path.join(dataset_root, 'val')
 test_path = os.path.join(dataset_root, 'test')
@@ -49,7 +49,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 scheduler = lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
-num_epochs = 20
+num_epochs = 10
 best_val_loss = float('inf')
 
 train_losses, val_losses = [], []

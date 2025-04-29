@@ -11,7 +11,7 @@ import seaborn as sns
 import numpy as np
 from tqdm import tqdm
 
-dataset_root = r"C:\Users\Batuhan\Desktop\Resnet50modelegitim\veriler"
+dataset_root = r"C:\Users\Bilal\Desktop\SonVeri\DuzenlenmisPG-tts"
 train_path = os.path.join(dataset_root, 'train')
 val_path = os.path.join(dataset_root, 'val')
 test_path = os.path.join(dataset_root, 'test')

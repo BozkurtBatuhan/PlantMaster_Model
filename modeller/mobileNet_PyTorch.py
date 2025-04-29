@@ -5,28 +5,38 @@ import torch.optim as optim
 from torch.optim import lr_scheduler
 from torch.utils.data import DataLoader
 from torchvision import datasets, models, transforms
-from sklearn.metrics import confusion_matrix, classification_report, f1_score, precision_score, recall_score
+from sklearn.metrics import (
+    confusion_matrix,
+    classification_report,
+    f1_score,
+    precision_score,
+    recall_score,
+)
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from tqdm import tqdm
 
-dataset_root = r"C:\Users\Batuhan\Desktop\Resnet50modelegitim\veriler"
-train_path = os.path.join(dataset_root, 'train')
-val_path = os.path.join(dataset_root, 'val')
-test_path = os.path.join(dataset_root, 'test')
+dataset_root = r"C:\Users\Bilal\Desktop\SonVeri\DuzenlenmisPG-tts"
+train_path = os.path.join(dataset_root, "train")
+val_path = os.path.join(dataset_root, "val")
+test_path = os.path.join(dataset_root, "test")
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-train_transform = transforms.Compose([
-    transforms.Resize((224, 224)),  
-    transforms.ToTensor(),
-])
+train_transform = transforms.Compose(
+    [
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+    ]
+)
 
-val_test_transform = transforms.Compose([
-    transforms.Resize((224, 224)),  
-    transforms.ToTensor(),
-])
+val_test_transform = transforms.Compose(
+    [
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+    ]
+)
 
 train_dataset = datasets.ImageFolder(train_path, transform=train_transform)
 val_dataset = datasets.ImageFolder(val_path, transform=val_test_transform)
@@ -48,7 +58,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.0001)
 scheduler = lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
 num_epochs = 20
-best_val_loss = float('inf')
+best_val_loss = float("inf")
 
 train_losses, val_losses = [], []
 train_accs, val_accs = [], []
@@ -100,16 +110,18 @@ for epoch in range(num_epochs):
     val_losses.append(val_loss)
     val_accs.append(val_acc.item())
 
-    print(f"Train Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f} | Val Loss: {val_loss:.4f} Acc: {val_acc:.4f}")
+    print(
+        f"Train Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f} | Val Loss: {val_loss:.4f} Acc: {val_acc:.4f}"
+    )
 
     if val_loss < best_val_loss:
         best_val_loss = val_loss
-        torch.save(model.state_dict(), 'best_plant_disease_model_mobilenet.pth')
+        torch.save(model.state_dict(), "best_plant_disease_model_mobilenet.pth")
         print("Best model saved.")
 
     scheduler.step()
 
-model.load_state_dict(torch.load('best_plant_disease_model_mobilenet.pth'))
+model.load_state_dict(torch.load("best_plant_disease_model_mobilenet.pth"))
 
 model.eval()
 y_true = []
@@ -124,9 +136,9 @@ with torch.no_grad():
         y_true.extend(labels.cpu().numpy())
         y_pred.extend(preds.cpu().numpy())
 
-f1 = f1_score(y_true, y_pred, average='weighted')
-precision = precision_score(y_true, y_pred, average='weighted')
-recall = recall_score(y_true, y_pred, average='weighted')
+f1 = f1_score(y_true, y_pred, average="weighted")
+precision = precision_score(y_true, y_pred, average="weighted")
+recall = recall_score(y_true, y_pred, average="weighted")
 
 print(f"F1-Score: {f1:.4f}")
 print(f"Precision: {precision:.4f}")
@@ -137,29 +149,36 @@ print(classification_report(y_true, y_pred, target_names=class_names))
 
 cm = confusion_matrix(y_true, y_pred)
 fig, ax = plt.subplots(figsize=(10, 8))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
-plt.xlabel('Predicted')
-plt.ylabel('True')
-plt.title('Confusion Matrix')
-plt.savefig('confusion_matrix.png')
+sns.heatmap(
+    cm,
+    annot=True,
+    fmt="d",
+    cmap="Blues",
+    xticklabels=class_names,
+    yticklabels=class_names,
+)
+plt.xlabel("Predicted")
+plt.ylabel("True")
+plt.title("Confusion Matrix")
+plt.savefig("mobilenet_confusion_matrix.png")
 plt.show()
 
 plt.figure()
-plt.plot(train_losses, label='Train Loss')
-plt.plot(val_losses, label='Validation Loss')
-plt.xlabel('Epochs')
-plt.ylabel('Loss')
-plt.title('Train vs Validation Loss')
+plt.plot(train_losses, label="Train Loss")
+plt.plot(val_losses, label="Validation Loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.title("Train vs Validation Loss")
 plt.legend()
-plt.savefig('loss_graph.png')
+plt.savefig("mobilenet_loss_graph.png")
 plt.show()
 
 plt.figure()
-plt.plot(train_accs, label='Train Accuracy')
-plt.plot(val_accs, label='Validation Accuracy')
-plt.xlabel('Epochs')
-plt.ylabel('Accuracy')
-plt.title('Train vs Validation Accuracy')
+plt.plot(train_accs, label="Train Accuracy")
+plt.plot(val_accs, label="Validation Accuracy")
+plt.xlabel("Epochs")
+plt.ylabel("Accuracy")
+plt.title("Train vs Validation Accuracy")
 plt.legend()
-plt.savefig('accuracy_graph.png')
+plt.savefig("mobilenet_accuracy_graph.png")
 plt.show()
