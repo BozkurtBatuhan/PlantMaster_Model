@@ -33,9 +33,11 @@ class EfficientB4Predictor:
             ]
         )
 
-    def predict(self, image_path):
+    def predict(self, image):  # artık image_path değil doğrudan image alıyor
         try:
-            image = Image.open(image_path).convert("RGB")
+            if not isinstance(image, Image.Image):
+                raise TypeError("predict() fonksiyonuna bir PIL.Image nesnesi verilmelidir.")
+
             inputs = self.transform(image).unsqueeze(0).to(self.device)
 
             with torch.no_grad():
